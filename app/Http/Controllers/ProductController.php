@@ -2,39 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\SanPham; // Nhớ gọi Model SanPham của bạn
 
 class ProductController extends Controller
 {
-    // 1. Hiển thị danh sách sản phẩm
+    // 1. Hiển thị danh sách
     public function index() {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        $ds_sanpham = SanPham::all();
+        return view('danh_sach', compact('ds_sanpham'));
     }
 
-    // 2. Lưu sản phẩm mới
+    // 2. Xử lý thêm sản phẩm mới + Validation
     public function store(Request $request) {
-        Product::create($request->all());
-        return redirect()->back()->with('success', 'Thêm mới thành công!');
+        $request->validate([
+            'TenSP' => 'required|min:3',
+            'SoLuong' => 'required|numeric|min:1',
+            'Gia' => 'required|numeric|min:1000',
+        ]);
+
+        SanPham::create($request->all());
+        return redirect()->back()->with('success', 'Đã thêm sản phẩm mới!');
     }
 
-    // 3. Hiển thị trang sửa (Lấy thông tin cũ ra form)
-    public function edit($id) {
-        $product = Product::findOrFail($id); // Dùng findOrFail để tránh lỗi nếu ID không tồn tại
-        return view('products.edit', compact('product'));
-    }
-
-    // 4. Cập nhật dữ liệu vào Database
-    public function update(Request $request, $id) {
-        $product = Product::findOrFail($id);
-        $product->update($request->all());
-        return redirect('/products')->with('success', 'Cập nhật thành column!');
-    }
-
-    // 5. Xóa sản phẩm
+    // 3. Xử lý xóa sản phẩm
     public function destroy($id) {
-        Product::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'Đã xóa sản phẩm!');
+        SanPham::where('ID', $id)->delete();
+        return redirect()->back()->with('success', 'Đã xóa sản phẩm thành công!');
     }
 }
