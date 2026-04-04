@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class SanPham extends Model
 {
-    // Khai báo tên bảng thực tế trong Database
     protected $table = 'sanpham';
+    protected $primaryKey = 'ID';
+    
+    // Laravel sẽ tự quản lý cột timestamps nếu bạn đặt tên đúng là created_at/updated_at. 
+    // Trong hình bạn đặt là 'timestamps', nên ta tạm tắt tự động để tránh lỗi.
+    public $timestamps = false; 
 
-    // Các cột mà Tuấn đã tạo trong phpMyAdmin (ID, TenSP, SoLuong, Gia)
-    protected $fillable = ['TenSP', 'SoLuong', 'Gia'];
-
-    // Nếu bảng của bạn không có 2 cột created_at và updated_at thì thêm dòng này:
-    public $timestamps = false;
+    // Cập nhật danh sách các cột mới
+    protected $fillable = ['name', 'price', 'quantity', 'category'];
 }

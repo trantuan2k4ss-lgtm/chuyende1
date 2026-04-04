@@ -8,22 +8,25 @@ use App\Models\SanPham; // Nhớ gọi Model SanPham của bạn
 class ProductController extends Controller
 {
     // 1. Hiển thị danh sách
-    public function index() {
-        $ds_sanpham = SanPham::all();
-        return view('danh_sach', compact('ds_sanpham'));
-    }
+   public function index() {
+    // Lấy dữ liệu và phân trang, mỗi trang 5 dòng
+    $ds_sanpham = SanPham::paginate(5);
+    
+    return view('danh_sach', compact('ds_sanpham'));
+}
 
     // 2. Xử lý thêm sản phẩm mới + Validation
     public function store(Request $request) {
-        $request->validate([
-            'TenSP' => 'required|min:3',
-            'SoLuong' => 'required|numeric|min:1',
-            'Gia' => 'required|numeric|min:1000',
-        ]);
+    $request->validate([
+        'name' => 'required|min:3',
+        'price' => 'required|numeric',
+        'quantity' => 'required|numeric',
+        'category' => 'required',
+    ]);
 
-        SanPham::create($request->all());
-        return redirect()->back()->with('success', 'Đã thêm sản phẩm mới!');
-    }
+    SanPham::create($request->all());
+    return redirect()->back()->with('success', 'Đã thêm vào kho products!');
+}
 
     // 3. Xử lý xóa sản phẩm
     public function destroy($id) {
