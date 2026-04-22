@@ -39,6 +39,13 @@
                 @php $total = 0; @endphp
 
                 {{-- HEADER --}}
+                @if($errors->any())
+                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                    @foreach($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+                @endif
                 <div class="grid grid-cols-12 px-6 py-4 border-b text-sm text-gray-500">
                     <div class="col-span-6">Sản phẩm</div>
                     <div class="col-span-2 text-center">Giá</div>
@@ -137,9 +144,10 @@
                     </span>
                 </div>
 
-                <button class="w-full mt-6 bg-black text-white py-3 rounded-lg hover:bg-gray-800">
+                <a href="{{ route('checkout.index') }}"
+                    class="block w-full mt-6 text-center bg-black text-white py-3 rounded-lg hover:bg-gray-800">
                     Thanh toán
-                </button>
+                </a>
 
             </div>
 

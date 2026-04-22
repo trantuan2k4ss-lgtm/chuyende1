@@ -46,16 +46,35 @@ class CartController extends Controller
     public function update(Request $request)
     {
         $cart = session()->get('cart', []);
+        $quantities = $request->quantities;
 
-        foreach ($request->quantities as $id => $qty) {
-            if (isset($cart[$id])) {
-                $cart[$id]['quantity'] = $qty;
+        foreach ($quantities as $id => $qty) {
+
+            if (!isset($cart[$id])) continue;
+
+            // lấy sản phẩm thật từ DB để kiểm tra tồn kho
+            $product = Product::find($id);
+
+            if (!$product) continue;
+
+            // kiểm tra số lượng hợp lệ
+            if ($qty < 1) {
+                $qty = 1;
             }
+
+            if ($qty > $product->stock) {
+                return back()->withErrors([
+                    'stock_error' => "Sản phẩm {$product->name} chỉ còn {$product->stock} sản phẩm trong kho."
+                ]);
+            }
+
+            // cập nhật lại giỏ
+            $cart[$id]['quantity'] = $qty;
         }
 
         session()->put('cart', $cart);
 
-        return back()->with('success', 'Đã cập nhật');
+        return back()->with('success', 'Đã cập nhật giỏ hàng');
     }
 
     public function remove($id)

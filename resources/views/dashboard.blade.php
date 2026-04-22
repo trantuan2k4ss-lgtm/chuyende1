@@ -68,17 +68,19 @@
                                 <th>Khách</th>
                                 <th>Tổng tiền</th>
                                 <th>Trạng thái</th>
+                                <th>Ngày giờ</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($latestOrders ?? [] as $order)
                             <tr>
                                 <td>{{ $order->id }}</td>
-                                <td>{{ $order->name }}</td>
-                                {{ number_format($order->total_price) }}đ
+                                <td>{{ $order->receiver_name }}</td>
+                                <td>{{ number_format($order->total_price) }}đ</td>
                                 <td>
                                     <span class="badge bg-primary">{{ $order->status }}</span>
                                 </td>
+                                <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
                             </tr>
                             @empty
                             <tr>

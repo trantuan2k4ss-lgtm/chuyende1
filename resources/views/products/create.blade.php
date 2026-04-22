@@ -70,6 +70,14 @@
                     placeholder="Không bắt buộc"
                     value="{{ old('sale_price') }}">
             </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Giá nhập</label>
+                <input type="number"
+                    name="cost_price"
+                    class="form-control"
+                    placeholder="Giá nhập hàng"
+                    value="{{ old('cost_price') }}">
+            </div>
 
             <div class="mb-3">
                 <label class="form-label fw-semibold">

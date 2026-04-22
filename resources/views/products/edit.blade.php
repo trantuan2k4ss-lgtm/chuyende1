@@ -78,10 +78,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Size</label>
-                    <input type="text" name="size" class="form-control"
-                        placeholder="S, M, L..."
-                        value="{{ old('size', $product->size) }}">
+                    <label class="form-label fw-semibold">Giá nhập</label>
+                    <input type="number"
+                        name="cost_price"
+                        class="form-control"
+                        placeholder="Giá nhập hàng"
+                        value="{{ old('cost_price') }}">
                 </div>
 
                 <div class="mb-3">

@@ -4,7 +4,7 @@
 
 {{-- BANNER --}}
 <div class="w-full h-[420px] bg-cover bg-center flex items-center justify-center text-white text-4xl font-bold"
-    style="background-image: url('https://s3-hni02.higiocloud.vn/gppm2/prod/cms/17732139866031750.jpg')">
+    style="background-image: url('https://pickleballshop.vn/wp-content/uploads/2025/01/baner-pickleball.png')">
 </div>
 
 {{-- VOUCHER --}}

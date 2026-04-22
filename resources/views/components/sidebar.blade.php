@@ -5,7 +5,7 @@
     </div>
 
     <nav class="nav flex-column">
-        <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">
+        <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->is('/admin') ? 'active' : '' }}">
             <i class="bi bi-house-door me-2"></i>
             Dashboard
         </a>

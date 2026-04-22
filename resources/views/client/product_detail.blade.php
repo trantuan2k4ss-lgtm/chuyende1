@@ -106,13 +106,23 @@
                 {{-- BUTTON --}}
                 <div class="mt-8 flex gap-4">
 
-                    <button onclick="addToCart({{ $product->id }})"
-                        class="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800">
+                    <button
+                        onclick="addToCart({{ $product->id }})"
+                        class="w-full py-3 rounded-lg text-white
+        {{ $product->stock > 0 ? 'bg-black hover:bg-gray-800' : 'bg-gray-400 cursor-not-allowed' }}"
+                        {{ $product->stock == 0 ? 'disabled' : '' }}>
                         Thêm vào giỏ hàng
                     </button>
 
-                    <button onclick="addToCart({{ $product->id }}, true)" class="w-full border py-3 rounded-lg hover:bg-gray-100">
-                        <a href="/cart">Mua ngay</a>
+                    <button
+                        onclick="addToCart({{ $product->id }}, true)"
+                        class="w-full border py-3 rounded-lg
+        {{ $product->stock > 0
+            ? 'bg-white hover:bg-gray-100'
+            : 'bg-gray-200 cursor-not-allowed opacity-60' }}"
+                        {{ $product->stock == 0 ? 'disabled' : '' }}>
+
+                        Mua ngay
                     </button>
 
                 </div>

@@ -7,6 +7,7 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+
     public function show($slug)
     {
         // lấy sản phẩm theo slug

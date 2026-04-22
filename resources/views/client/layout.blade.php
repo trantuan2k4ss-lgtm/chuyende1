@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Fashion Shop</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="bg-gray-100">
@@ -17,7 +18,7 @@
 
             {{-- LOGO --}}
             <a href="/">
-                <img src="https://tokyolife.vn/_next/static/media/logo-chu-hac.79825a1d.png"
+                <img src="https://pickleballshop.vn/wp-content/uploads/2024/10/logo-pickleball-full-color-1024x257.png"
                     class="w-32">
             </a>
 
@@ -93,9 +94,11 @@
                     </div>
 
                     {{-- DROPDOWN --}}
-                    <div class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow hidden group-hover:block">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Tài khoản</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Đơn hàng</a>
+                    <div class="absolute right-0 w-40 bg-white border rounded-lg shadow hidden group-hover:block">
+                        @auth
+                        <a href="/profile" class="block px-4 py-2 hover:bg-gray-100">{{ auth()->user()->name }}</a>
+                        @endauth
+                        <a href="/profile/order" class="block px-4 py-2 hover:bg-gray-100">Đơn hàng</a>
 
                         <form method="POST" action="/logout">
                             @csrf

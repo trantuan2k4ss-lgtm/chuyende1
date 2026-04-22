@@ -2,43 +2,86 @@
 
 @section('content')
 
-<h2 class="mb-4">Sản phẩm</h2>
+<div class="max-w-7xl mx-auto px-4 py-10">
 
-<div class="row">
+    {{-- TITLE --}}
+    <h2 class="text-center text-red-600 text-2xl font-bold mb-8 uppercase">
+        Sản phẩm mới
+    </h2>
 
-    @foreach($products as $p)
-    <div class="col-md-3 mb-4">
-        <div class="card h-100">
+    {{-- GRID --}}
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
 
-            <img src="{{ asset('storage/'.$p->image) }}" class="card-img-top">
+        @foreach($products as $p)
+        <a href="{{ route('product.detail', $p->slug) }}" class="group">
 
-            <div class="card-body">
-                <h6>{{ $p->name }}</h6>
+            <div class="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
 
-                {{-- giá --}}
-                @if($p->sale_price)
-                <p>
-                    <del>{{ number_format($p->price) }}đ</del>
-                    <b class="text-danger">
-                        {{ number_format($p->sale_price) }}đ
-                    </b>
-                </p>
-                @else
-                <p>{{ number_format($p->price) }}đ</p>
-                @endif
+                {{-- IMAGE --}}
+                <div class="relative bg-gray-100 overflow-hidden">
 
-                <a href="#" class="btn btn-dark w-100">Xem</a>
+                    <img src="{{ asset('storage/'.$p->image) }}"
+                        class="w-full h-[260px] object-cover group-hover:scale-105 transition duration-300">
+
+                    {{-- BADGE --}}
+                    <div class="absolute bottom-0 left-0 w-full bg-red-600 text-white text-xs flex justify-between px-3 py-2">
+                        <span>MUA LÀ CÓ QUÀ</span>
+                        <span>ONLINE</span>
+                    </div>
+
+                </div>
+
+                {{-- INFO --}}
+                <div class="p-3">
+
+                    {{-- NAME --}}
+                    <h3 class="text-sm text-gray-800 line-clamp-2 min-h-[40px]">
+                        {{ $p->name }}
+                    </h3>
+
+                    {{-- PRICE --}}
+                    <div class="mt-2">
+
+                        @if($p->sale_price)
+
+                        <p class="text-red-600 font-semibold">
+                            {{ number_format($p->sale_price) }}đ
+                        </p>
+
+                        <div class="flex items-center gap-2 text-xs mt-1">
+                            <span class="line-through text-gray-400">
+                                {{ number_format($p->price) }}đ
+                            </span>
+
+                            <span class="text-red-600 font-semibold">
+                                -{{ round((($p->price - $p->sale_price) / $p->price) * 100) }}%
+                            </span>
+                        </div>
+
+                        @else
+
+                        <p class="text-red-600 font-semibold">
+                            {{ number_format($p->price) }}đ
+                        </p>
+
+                        @endif
+
+                    </div>
+
+                </div>
+
             </div>
 
-        </div>
+        </a>
+        @endforeach
+
     </div>
-    @endforeach
 
-</div>
+    {{-- PAGINATION --}}
+    <div class="mt-10 flex justify-center">
+        {{ $products->links() }}
+    </div>
 
-{{-- phân trang --}}
-<div class="mt-4">
-    {{ $products->links() }}
 </div>
 
 @endsection

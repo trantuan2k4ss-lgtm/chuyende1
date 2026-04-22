@@ -18,7 +18,9 @@
             <th>SĐT</th>
             <th>Tổng</th>
             <th>Trạng thái</th>
-            <th></th>
+            <th>Thanh toán</th>
+            <th>Ngày giờ</th>
+            <th>Chi tiết</th>
         </tr>
     </thead>
     <tbody>
@@ -41,10 +43,11 @@
                         <option value="dang_giao" {{ $o->status=='dang_giao'?'selected':'' }}>Đang giao</option>
                         <option value="hoan_thanh" {{ $o->status=='hoan_thanh'?'selected':'' }}>Hoàn thành</option>
                         <option value="da_huy" {{ $o->status=='da_huy'?'selected':'' }}>Đã hủy</option>
-
                     </select>
                 </form>
             </td>
+            <td>{{ $o->payment_method }}</td>
+            <td>{{ $o->created_at->format('d/m/Y H:i') }}</td>
 
             <td>
                 <a href="{{ route('orders.show', $o) }}" class="btn btn-dark btn-sm">
