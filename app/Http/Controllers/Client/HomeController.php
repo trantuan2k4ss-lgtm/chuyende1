@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
         $products = Product::where('status', 'hien')
             ->latest()
-            ->take(8)
+            ->take(15)
             ->get();
         $categories = Category::where('status', 'hien')->get();
         $vouchers = Voucher::where('status', 'hien')

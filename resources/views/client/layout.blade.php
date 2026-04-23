@@ -29,6 +29,7 @@
                     <input type="text"
                         name="keyword"
                         placeholder="Tìm kiếm sản phẩm..."
+                        autocomplete="off"
                         class="w-full border rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black">
 
                     <button class="bg-black text-white px-4 rounded-r-lg hover:bg-gray-800 transition">

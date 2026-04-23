@@ -20,7 +20,7 @@ use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Client\ProfileController;
 
 
-Route::get('/login', [AuthController::class, 'showLogin']);
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/register', [AuthController::class, 'showRegister']);
@@ -55,7 +55,7 @@ Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('c
 Route::post('/voucher/apply', [VoucherClientController::class, 'apply'])->name('voucher.apply');
 
 // nhóm admin
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -64,4 +64,9 @@ Route::prefix('admin')->group(function () {
     Route::resource('orders', OrderController::class)->only(['index', 'show', 'update']);
     Route::resource('vouchers', VoucherController::class);
     Route::resource('users', UserController::class);
+});
+
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
 });

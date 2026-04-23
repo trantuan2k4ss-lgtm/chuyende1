@@ -11,6 +11,8 @@
     <p><b>Tên:</b> {{ $order->receiver_name }}</p>
     <p><b>SĐT:</b> {{ $order->phone }}</p>
     <p><b>Địa chỉ:</b> {{ $order->address }}</p>
+    <p><b>Phương thức thanh toán:</b> {{ $order->payment_method }}</p>
+    <p><b>Thời gian:</b> {{ $order->updated_at }}</p>
 </div>
 
 <div class="card p-3 mb-4">

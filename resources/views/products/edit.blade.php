@@ -83,7 +83,7 @@
                         name="cost_price"
                         class="form-control"
                         placeholder="Giá nhập hàng"
-                        value="{{ old('cost_price') }}">
+                        value="{{ old('cost_price', $product->cost_price ?? '') }}">
                 </div>
 
                 <div class="mb-3">

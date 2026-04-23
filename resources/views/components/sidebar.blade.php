@@ -35,5 +35,11 @@
             <i class="bi bi-people me-2"></i>
             Người dùng
         </a>
+        <form method="POST" action="/logout">
+            @csrf
+            <button class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                Đăng xuất
+            </button>
+        </form>
     </nav>
 </div>
