@@ -23,6 +23,7 @@ return new class extends Migration
 
             $table->decimal('price', 10, 2);
             $table->decimal('sale_price', 10, 2)->nullable();
+            $table->decimal('cost_price', 10, 2)->nullable();
 
             $table->text('description')->nullable();
 

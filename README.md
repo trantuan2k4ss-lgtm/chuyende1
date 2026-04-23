@@ -1,59 +1,259 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛍️ Website Bán Hàng Thời Trang (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📌 Giới thiệu
 
-## About Laravel
+Đây là dự án website thương mại điện tử được xây dựng bằng **Laravel**, phục vụ cho việc bán sản phẩm thời trang (quần áo, phụ kiện,...).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Hệ thống hỗ trợ:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Quản lý sản phẩm, danh mục
+- Giỏ hàng, thanh toán
+- Voucher giảm giá
+- Dashboard thống kê cho admin
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Công nghệ sử dụng
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Backend:** Laravel (PHP)
+- **Frontend:** Blade + TailwindCSS + Bootstrap
+- **Database:** MySQL
+- **Authentication:** Laravel Auth (custom)
+- **Session:** Cart lưu bằng session
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🧩 Chức năng chính
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 👤 Người dùng (Client)
 
-### Premium Partners
+- Đăng ký / Đăng nhập
+- Xem danh sách sản phẩm
+- Xem chi tiết sản phẩm
+- Thêm vào giỏ hàng
+- Cập nhật số lượng sản phẩm
+- Thanh toán đơn hàng
+- Áp dụng voucher
+- Sao chép mã voucher
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+### 🛒 Giỏ hàng
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Lưu bằng session
+- Cập nhật số lượng
+- Kiểm tra tồn kho khi update
+- Tính tổng tiền realtime
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 💳 Thanh toán
 
-## Security Vulnerabilities
+- Nhập thông tin nhận hàng
+- Tạo đơn hàng + order items
+- Trừ số lượng sản phẩm trong kho
+- Sử dụng transaction để tránh lỗi
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+### 🎟️ Voucher
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Hỗ trợ:
+    - Giảm theo %
+    - Giảm theo số tiền
+
+- Có điều kiện đơn tối thiểu
+
+---
+
+### 🛠️ Admin Dashboard
+
+- Tổng sản phẩm
+- Tổng danh mục
+- Tổng đơn hàng
+- Lợi nhuận
+
+👉 Công thức lợi nhuận:
+
+```
+Lợi nhuận = (Giá bán - Giá nhập) * số lượng - voucher
+```
+
+---
+
+### 📊 Thống kê
+
+- Đơn hàng gần đây
+- Sản phẩm mới
+- Sản phẩm sắp hết hàng (stock < 5)
+
+---
+
+app/
+├── Http/
+│ ├── Controllers/
+│ │ ├── Client/ # Xử lý logic phía người dùng (frontend)
+│ │ │ ├── CartController.php
+│ │ │ │ - Quản lý giỏ hàng (session)
+│ │ │ │ - Thêm / sửa / xoá sản phẩm
+│ │ │ │ - Kiểm tra tồn kho khi cập nhật
+│ │ │ │
+│ │ │ ├── CheckoutController.php
+│ │ │ │ - Xử lý thanh toán
+│ │ │ │ - Tạo Order + OrderItem
+│ │ │ │ - Tính tổng tiền
+│ │ │ │ - Trừ số lượng sản phẩm (stock)
+│ │ │ │ - Sử dụng Transaction để tránh lỗi giữa chừng
+│ │ │ │
+│ │ │ └── AuthController.php
+│ │ │ - Đăng ký / đăng nhập / đăng xuất
+│ │ │ - Hash password
+│ │ │ - Bảo mật session (regenerate)
+│ │ │
+│ │ └── DashboardController.php # Controller phía admin
+│ │ - Thống kê hệ thống
+│ │ - Tính lợi nhuận:
+│ │ (giá bán - giá nhập) \* số lượng - voucher
+│ │ - Lấy:
+│ │ + Đơn hàng mới
+│ │ + Sản phẩm mới
+│ │ + Sản phẩm sắp hết hàng (stock < 5)
+│
+├── Models/ # Tầng làm việc với database (Eloquent ORM)
+│ ├── Product.php
+│ │ - Thông tin sản phẩm
+│ │ - Field quan trọng:
+│ │ + price (giá bán)
+│ │ + cost_price (giá nhập)
+│ │ + stock (tồn kho)
+│ │
+│ ├── Order.php
+│ │ - Đơn hàng
+│ │ - Chứa tổng tiền, trạng thái, voucher
+│ │ - Quan hệ: hasMany(OrderItem)
+│ │
+│ ├── OrderItem.php
+│ │ - Chi tiết đơn hàng
+│ │ - Lưu snapshot tại thời điểm mua:
+│ │ + price
+│ │ + cost_price
+│ │ + quantity
+│ │
+│ └── Voucher.php
+│ - Mã giảm giá
+│ - Hỗ trợ:
+│ + Giảm theo %
+│ + Giảm theo tiền
+│ - Có điều kiện đơn tối thiểu (min_order)
+│
+resources/
+├── views/
+│ ├── client/ # Giao diện người dùng (frontend)
+│ │ - Trang chủ, sản phẩm, giỏ hàng, checkout
+│ │ - Hiển thị voucher
+│ │ - Sử dụng Blade + TailwindCSS
+│ │
+│ └── dashboard.blade.php # Giao diện admin
+│ - Hiển thị thống kê
+│ - Danh sách đơn hàng
+│ - Sản phẩm mới
+│ - Sản phẩm sắp hết hàng
+│ - Có tương tác click (đi tới chi tiết)
+
+## ⚙️ Cài đặt
+
+### 1. Clone project
+
+```bash
+git clone <repo-url>
+cd project
+```
+
+---
+
+### 2. Cài đặt package
+
+```bash
+composer install
+npm install
+```
+
+---
+
+### 3. Cấu hình môi trường
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+---
+
+### 4. Cấu hình database
+
+Trong `.env`:
+
+```
+DB_DATABASE=shop_fashion
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+---
+
+### 5. Chạy migrate
+
+```bash
+php artisan migrate
+```
+
+---
+
+### 6. Chạy server
+
+```bash
+composer run dev
+```
+
+---
+
+## 🔐 Phân quyền
+
+- **Admin**
+    - Quản lý toàn bộ hệ thống
+
+- **User**
+    - Mua hàng
+
+Middleware:
+
+```
+auth
+admin
+```
+
+---
+
+## ⚠️ Các vấn đề đã xử lý
+
+- ✔️ Kiểm tra tồn kho khi thêm/cập nhật giỏ hàng
+- ✔️ Tránh lỗi dữ liệu khi checkout bằng transaction
+- ✔️ Fix lỗi route admin
+- ✔️ Fix overflow total_price
+- ✔️ Fix logic tính lợi nhuận
+
+---
+
+## 💡 Hướng phát triển
+
+- Thanh toán online (VNPay, Momo)
+- Thống kê biểu đồ (Chart.js)
+- Realtime stock
+- Wishlist
+- Đánh giá sản phẩm
+
+---
+
+## 📄 License
+
+Dự án phục vụ mục đích học tập.
