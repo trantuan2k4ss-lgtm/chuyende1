@@ -1,10 +1,10 @@
-# 🛍️ Website Bán Hàng Thời Trang (Laravel)
+# 🛍️ Website Bán đồ thể thao Pickleball (Laravel)
 
 ## 📌 Giới thiệu
 
-Đây là dự án website thương mại điện tử được xây dựng bằng **Laravel**, phục vụ cho việc bán sản phẩm thời trang (quần áo, phụ kiện,...).
+Đây là dự án website bán đồ thể thao Pickleball được xây dựng bằng **Laravel**.
 
-Hệ thống hỗ trợ:
+### ✨ Hệ thống hỗ trợ:
 
 - Quản lý sản phẩm, danh mục
 - Giỏ hàng, thanh toán
@@ -19,19 +19,30 @@ Hệ thống hỗ trợ:
 - **Frontend:** Blade + TailwindCSS + Bootstrap
 - **Database:** MySQL
 - **Authentication:** Laravel Auth (custom)
-- **Session:** Cart lưu bằng session
+- **Session:** Giỏ hàng lưu bằng session
 
----
+## 📸 Demo giao diện
+
+### 🏠 Trang chủ
+
+![Home](screenshots/home.png)
+
+### 🛒 Giỏ hàng
+
+![Cart](screenshots/cart.png)
+
+### 🛠️ Admin Dashboard
+
+## ![Dashboard](screenshots/dashboard.png)
 
 ## 🧩 Chức năng chính
 
 ### 👤 Người dùng (Client)
 
 - Đăng ký / Đăng nhập
-- Xem danh sách sản phẩm
-- Xem chi tiết sản phẩm
+- Xem danh sách & chi tiết sản phẩm
 - Thêm vào giỏ hàng
-- Cập nhật số lượng sản phẩm
+- Cập nhật số lượng
 - Thanh toán đơn hàng
 - Áp dụng voucher
 - Sao chép mã voucher
@@ -41,8 +52,8 @@ Hệ thống hỗ trợ:
 ### 🛒 Giỏ hàng
 
 - Lưu bằng session
-- Cập nhật số lượng
-- Kiểm tra tồn kho khi update
+- Cập nhật số lượng sản phẩm
+- Kiểm tra tồn kho khi cập nhật
 - Tính tổng tiền realtime
 
 ---
@@ -50,18 +61,15 @@ Hệ thống hỗ trợ:
 ### 💳 Thanh toán
 
 - Nhập thông tin nhận hàng
-- Tạo đơn hàng + order items
+- Tạo Order + OrderItem
 - Trừ số lượng sản phẩm trong kho
-- Sử dụng transaction để tránh lỗi
+- Sử dụng **Database Transaction** để tránh lỗi
 
 ---
 
 ### 🎟️ Voucher
 
-- Hỗ trợ:
-    - Giảm theo %
-    - Giảm theo số tiền
-
+- Giảm theo % hoặc số tiền
 - Có điều kiện đơn tối thiểu
 
 ---
@@ -73,7 +81,7 @@ Hệ thống hỗ trợ:
 - Tổng đơn hàng
 - Lợi nhuận
 
-👉 Công thức lợi nhuận:
+👉 Công thức:
 
 ```
 Lợi nhuận = (Giá bán - Giá nhập) * số lượng - voucher
@@ -89,76 +97,55 @@ Lợi nhuận = (Giá bán - Giá nhập) * số lượng - voucher
 
 ---
 
+## 🗂️ Cấu trúc project
+
+```
 app/
 ├── Http/
-│ ├── Controllers/
-│ │ ├── Client/ # Xử lý logic phía người dùng (frontend)
-│ │ │ ├── CartController.php
-│ │ │ │ - Quản lý giỏ hàng (session)
-│ │ │ │ - Thêm / sửa / xoá sản phẩm
-│ │ │ │ - Kiểm tra tồn kho khi cập nhật
-│ │ │ │
-│ │ │ ├── CheckoutController.php
-│ │ │ │ - Xử lý thanh toán
-│ │ │ │ - Tạo Order + OrderItem
-│ │ │ │ - Tính tổng tiền
-│ │ │ │ - Trừ số lượng sản phẩm (stock)
-│ │ │ │ - Sử dụng Transaction để tránh lỗi giữa chừng
-│ │ │ │
-│ │ │ └── AuthController.php
-│ │ │ - Đăng ký / đăng nhập / đăng xuất
-│ │ │ - Hash password
-│ │ │ - Bảo mật session (regenerate)
-│ │ │
-│ │ └── DashboardController.php # Controller phía admin
-│ │ - Thống kê hệ thống
-│ │ - Tính lợi nhuận:
-│ │ (giá bán - giá nhập) \* số lượng - voucher
-│ │ - Lấy:
-│ │ + Đơn hàng mới
-│ │ + Sản phẩm mới
-│ │ + Sản phẩm sắp hết hàng (stock < 5)
+│   ├── Controllers/
+│   │   ├── Client/              # Logic phía người dùng
+│   │   │   ├── CartController.php
+│   │   │   │   - Quản lý giỏ hàng (session)
+│   │   │   │   - Thêm / sửa / xoá sản phẩm
+│   │   │   │   - Kiểm tra tồn kho
+│   │   │   │
+│   │   │   ├── CheckoutController.php
+│   │   │   │   - Xử lý thanh toán
+│   │   │   │   - Tạo Order + OrderItem
+│   │   │   │   - Trừ stock
+│   │   │   │   - Transaction
+│   │   │   │
+│   │   │   └── AuthController.php
+│   │   │       - Đăng nhập / đăng ký
+│   │   │       - Bảo mật session
+│   │   │
+│   │   └── DashboardController.php   # Admin
+│   │       - Thống kê
+│   │       - Tính lợi nhuận
+│   │       - Sản phẩm sắp hết hàng
 │
-├── Models/ # Tầng làm việc với database (Eloquent ORM)
-│ ├── Product.php
-│ │ - Thông tin sản phẩm
-│ │ - Field quan trọng:
-│ │ + price (giá bán)
-│ │ + cost_price (giá nhập)
-│ │ + stock (tồn kho)
-│ │
-│ ├── Order.php
-│ │ - Đơn hàng
-│ │ - Chứa tổng tiền, trạng thái, voucher
-│ │ - Quan hệ: hasMany(OrderItem)
-│ │
-│ ├── OrderItem.php
-│ │ - Chi tiết đơn hàng
-│ │ - Lưu snapshot tại thời điểm mua:
-│ │ + price
-│ │ + cost_price
-│ │ + quantity
-│ │
-│ └── Voucher.php
-│ - Mã giảm giá
-│ - Hỗ trợ:
-│ + Giảm theo %
-│ + Giảm theo tiền
-│ - Có điều kiện đơn tối thiểu (min_order)
+├── Models/
+│   ├── Product.php
+│   │   - price, cost_price, stock
+│   │
+│   ├── Order.php
+│   │   - Đơn hàng (hasMany OrderItem)
+│   │
+│   ├── OrderItem.php
+│   │   - Snapshot sản phẩm khi mua
+│   │
+│   └── Voucher.php
+│       - Mã giảm giá
 │
 resources/
 ├── views/
-│ ├── client/ # Giao diện người dùng (frontend)
-│ │ - Trang chủ, sản phẩm, giỏ hàng, checkout
-│ │ - Hiển thị voucher
-│ │ - Sử dụng Blade + TailwindCSS
-│ │
-│ └── dashboard.blade.php # Giao diện admin
-│ - Hiển thị thống kê
-│ - Danh sách đơn hàng
-│ - Sản phẩm mới
-│ - Sản phẩm sắp hết hàng
-│ - Có tương tác click (đi tới chi tiết)
+│   ├── client/                 # Giao diện user
+│   │   - Home, Product, Cart, Checkout
+│   │
+│   └── dashboard.blade.php    # Giao diện admin
+```
+
+---
 
 ## ⚙️ Cài đặt
 
@@ -169,16 +156,12 @@ git clone <repo-url>
 cd project
 ```
 
----
-
 ### 2. Cài đặt package
 
 ```bash
 composer install
 npm install
 ```
-
----
 
 ### 3. Cấu hình môi trường
 
@@ -187,11 +170,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
----
-
-### 4. Cấu hình database
-
-Trong `.env`:
+### 4. Cấu hình database (.env)
 
 ```
 DB_DATABASE=shop_fashion
@@ -199,15 +178,11 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
----
-
 ### 5. Chạy migrate
 
 ```bash
 php artisan migrate
 ```
-
----
 
 ### 6. Chạy server
 
@@ -219,11 +194,8 @@ composer run dev
 
 ## 🔐 Phân quyền
 
-- **Admin**
-    - Quản lý toàn bộ hệ thống
-
-- **User**
-    - Mua hàng
+- **Admin:** Quản lý hệ thống
+- **User:** Mua hàng
 
 Middleware:
 
@@ -237,9 +209,9 @@ admin
 ## ⚠️ Các vấn đề đã xử lý
 
 - ✔️ Kiểm tra tồn kho khi thêm/cập nhật giỏ hàng
-- ✔️ Tránh lỗi dữ liệu khi checkout bằng transaction
+- ✔️ Transaction khi checkout
 - ✔️ Fix lỗi route admin
-- ✔️ Fix overflow total_price
+- ✔️ Fix overflow `total_price`
 - ✔️ Fix logic tính lợi nhuận
 
 ---
@@ -247,7 +219,7 @@ admin
 ## 💡 Hướng phát triển
 
 - Thanh toán online (VNPay, Momo)
-- Thống kê biểu đồ (Chart.js)
+- Biểu đồ thống kê (Chart.js)
 - Realtime stock
 - Wishlist
 - Đánh giá sản phẩm
